@@ -1,0 +1,24 @@
+body {
+	background:rgb(201, 112, 112);
+  	max-width: 600px;
+ 	margin-left: auto;
+  	margin-right: auto;
+}
+ 
+body, a {
+  	font-family: sans-serif;
+  	color: white;
+}
+header{
+	background:rgb(196, 171, 171);
+}
+button{
+	margin-top: 10px;
+	margin-left: 55px;
+	margin-right: 55px;
+	color: sienna;
+	background: white;
+}
+.sin{
+	text-decoration: none;
+}

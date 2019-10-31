@@ -1,0 +1,15 @@
+{
+  "short_name": "Equipo-Undead",
+  "name": "Nombres-Undead",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#5C50EC",
+  "theme_color": "#099D0B",
+  "icons": [
+    {
+      "src": "icono.png",
+      "sizes": "2048x2048",
+      "type": "image/png"
+    }
+  ]
+}

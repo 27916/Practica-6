@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Perro</title>
+    <link rel="icon" sizes="32x32" href="favicon.ico">
+    <meta name="theme-color" content="#ffcb2d">
+    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="estilos.css">
+    <script type="module" src="lib/registraServiceWorker.js"></script>
+    <script src="lib/polycustom.js"></script>
+    <script type="module" src="mi-footer.js"></script>
+  </head>
+  <body>
+    <form id="vista">
+      <header>
+        <center><br>   
+              <a href="index.html"><b>Cancelar</b></a>
+      
+        <h1>Perros</h1>
+        <br>
+        </center>
+      </header>
+      <br><br><br><br><br><br><br>
+      <center>
+      <h2>Ingrese los Datos</h2>
+      <p><input id="razaperro" type="text" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"     placeholder="Raza Perro" required></p>
+      <p><input id="colorperro" type="text" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" placeholder="Color Perro" required></p>
+      <br><br><br><br><button type="submit"><b>Guardar</b></button> <br><br><br><br><br>
+      <footer is="mi-footer"></footer>
+    </center> 
+    </form>
+    <script src="/__/firebase/7.2.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.2.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script type="module">
+      import { error } from "./lib/util.js";
+      const firestore = firebase.firestore();
+      firestore.enablePersistence()
+        .catch(error)
+        .then(() => vista.addEventListener("submit", guarda));
+      async function guarda(evt) {
+        try {
+          evt.preventDefault();
+          const ra_pe = razaperro.value.trim();
+          const co_pe = colorperro.value.trim();
+          const perro= { ra_pe,co_pe };
+          await firestore.collection("Perro").add(perro);
+          document.location = "index.html";
+        } catch (e) {
+          error(e)
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Perros</title>
+    <link rel="icon" sizes="32x32" href="favicon.ico">
+    <meta name="theme-color" content="#ffcb2d">
+    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="estilos.css">
+    <script type="module" src="lib/registraServiceWorker.js"></script>
+    <script src="lib/polycustom.js"></script>
+    <script type="module" src="mi-footer.js"></script>
+  </head>
+  <body>
+    <center>
+    <form id="vista">
+      <header>
+        <a href="index.html">Cancelar</a>
+        <h1><output id="título"><progress max="100">Cargando…</progress></h1>
+        <br>
+      </header>
+      <br><br><br>
+      <h1><b>Modificando Perro:</b></h1>
+      <p><input id="perro"     type="text" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" placeholder="Raza" required></p>
+      <p><input id="color" type="text" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" placeholder="Color" required></p>
+      <br><br><br>
+	  <button type="submit">Guardar perro</button>
+        <button id="eliminar" type="button">Eliminar perro</button><br><br><br>
+      <footer is="mi-footer"></footer>
+    </form>
+    </center>
+    <script src="/__/firebase/7.2.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.2.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script type="module">
+      import { error } from "./lib/util.js";
+      const parametros = new URLSearchParams(location.search);
+      const id = parametros.get("id");
+      const firestore = firebase.firestore();
+      firestore.enablePersistence()
+        .catch(error)
+        .then(busca);
+      async function busca() {
+        try {
+          const doc = await firestore.collection("Perro").doc(id).get();
+          if (doc.exists) {
+            const perros = doc.data();
+            document.title = perros.ra_pe;
+            título.value = perros.ra_pe;
+            perro.value = perros.ra_pe;
+            color.value = perros.co_pe;
+            vista.addEventListener("submit", guarda);
+            eliminar.addEventListener("click", elimina);
+          } else {
+            alert("Perro no encontrado");
+          }
+        } catch (e) {
+          error(e)
+        }
+      }
+      async function guarda(evt) {
+        try {
+          evt.preventDefault();
+          const ra_pe = perro.value.trim();
+          const co_pe = color.value.trim();
+          const perros = { ra_pe,co_pe };
+          await firestore.collection("Perro").doc(id).set(perros);
+          document.location = "index.html";
+        } catch (e) {
+          error(e)
+        }
+      }
+
+      
+
+      async function elimina() {
+        try {
+          await firestore.collection("Perro").doc(id).delete();
+          document.location = "index.html";
+        } catch (e) {
+          error(e)
+        }
+      }
+    </script>
+  </body>
+</html>
+
+
